@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 # Create your views here.
@@ -41,10 +41,14 @@ def signin(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return render(request, 'accounts/signin.html', {
-                    'ok': True,
-                    'message': 'Welcome back!'
-                })
+                if request.POST['next'] is not None:
+                    print("\n\n\n" + request.POST['next'] + "\n\n\n")
+                    return redirect(request.POST['next'])
+                else:
+                    return render(request, 'accounts/signin.html', {
+                        'ok': True,
+                        'message': 'Welcome back!'
+                    })
             else:
                 return render(request, 'accounts/signin.html', {
                     'ok': False,
