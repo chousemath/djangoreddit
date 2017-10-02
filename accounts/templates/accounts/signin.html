@@ -1,0 +1,19 @@
+{% if ok %}
+<p style="color: green;">{{ message }}</p>
+{% else %}
+<p style="color: red;">{{ message }}</p>
+{% endif %}
+<h1>sign in</h1>
+
+<form method="POST" action="{% url 'accounts:signin' %}">
+  {% csrf_token %}
+  <label>Username</label>
+  <br/>
+  <input type="text" name="username" value="" />
+  <br/>
+  <label>Password</label>
+  <br/>
+  <input type="password" name="password" value="" />
+  <br/>
+  <input type="submit" value="Sign In" />
+</form>

@@ -32,3 +32,27 @@ def signup(request):
             })
     else:
         return render(request, 'accounts/signup.html')
+
+def signin(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        if username != '' and password != '':
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                return render(request, 'accounts/signin.html', {
+                    'ok': True,
+                    'message': 'Welcome back!'
+                })
+            else:
+                return render(request, 'accounts/signin.html', {
+                    'ok': False,
+                    'message': 'You have not yet created an account'
+                })
+        else:
+            return render(request, 'accounts/signin.html', {
+              'ok': False,
+              'message': 'You are missing some information'
+            })
+    else:
+        return render(request, 'accounts/signin.html', {'ok': True})
