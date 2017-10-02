@@ -5,7 +5,7 @@
 {% endif %}
 <h1>sign in</h1>
 
-<form method="POST" action="{% url 'accounts:signin' %}">
+<form method="POST" action="{% url 'accounts:login' %}">
   {% csrf_token %}
   <label>Username</label>
   <br/>

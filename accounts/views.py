@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render
 
@@ -40,6 +40,7 @@ def signin(request):
         if username != '' and password != '':
             user = authenticate(request, username=username, password=password)
             if user is not None:
+                login(request, user)
                 return render(request, 'accounts/signin.html', {
                     'ok': True,
                     'message': 'Welcome back!'
@@ -56,3 +57,10 @@ def signin(request):
             })
     else:
         return render(request, 'accounts/signin.html', {'ok': True})
+
+def signout(request):
+    logout(request)
+    return render(request, 'accounts/signin.html', {
+        'ok': True,
+        'message': 'You have been signed out.'
+    })
