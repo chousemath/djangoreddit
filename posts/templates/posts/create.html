@@ -1,5 +1,10 @@
 <h1>Create a new post</h1>
 
+{% if ok %}
+{% else %}
+<p style="color: red;">{{ message }}</p>
+{% endif %}
+
 <form method="POST" action="{% url 'posts:create' %}">
   {% csrf_token %}
   <label>Post Title</label>

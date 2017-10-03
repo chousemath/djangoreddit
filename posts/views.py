@@ -5,12 +5,18 @@ from . import models
 
 # Create your views here.
 
+def index(request):
+    posts = models.Post.objects.order_by('-pub_date')
+    return render(request, 'posts/index.html', {
+        'posts': posts
+    })
+
 @login_required
 def create(request):
     if request.method == 'POST':
         title = request.POST['title']
         url = request.POST['url']
-        if title and url:
+        if title and url and validate_url(url):
             post = models.Post()
             post.title = title
             post.url = url
@@ -20,12 +26,18 @@ def create(request):
             return redirect("/posts/show/{}".format(post.id))
         else:
             return render(request, 'posts/create.html', {
-              'ok': True,
-              'message': 'Your post is missing information.'
+              'ok': False,
+              'message': 'Invalid or missing information.'
             })
     else:
-        return render(request, 'posts/create.html')
+        return render(request, 'posts/create.html', {
+            'ok': True,
+            'message': ''
+        })
 
 def show(request, post_id):
     post = get_object_or_404(models.Post, pk=post_id)
     return render(request, 'posts/show.html', {'post': post})
+
+def validate_url(url: str) -> bool:
+    return url.startswith('http://') or url.startswith('https://')

@@ -1,0 +1,16 @@
+<h1>Home</h1>
+
+<a href="{% url 'posts:create' %}">Create a new post</a>
+<br/>
+
+{% for post in posts.all %}
+
+<h1><a href="/posts/show/{{ post.id }}">{{ post.title }}</a></h1>
+<a href="{{ post.url }}">View this link</a>
+<h3>{{ post.pub_date }}</h3>
+<h3>{{ post.author.username }}</h3>
+<h3><a href="">UP</a> - {{ post.votes_total }} - <a href="">DOWN</a> - votes</h3>
+
+<hr/>
+
+{% endfor %}

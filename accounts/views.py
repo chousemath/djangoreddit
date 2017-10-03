@@ -62,7 +62,7 @@ def signin(request):
             response = render(
                 request,
                 'accounts/signin.html',
-                create_response(False, 'You are missing some information')
+                create_response(False, 'Information is invalid or missing.')
             )
         return response
     else:
