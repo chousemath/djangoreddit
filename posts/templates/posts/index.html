@@ -9,7 +9,18 @@
 <a href="{{ post.url }}">View this link</a>
 <h3>{{ post.pub_date }}</h3>
 <h3>{{ post.author.username }}</h3>
-<h3><a href="">UP</a> - {{ post.votes_total }} - <a href="">DOWN</a> - votes</h3>
+
+<form method="POST" action="{% url 'posts:upvote' post.id %}">
+  {% csrf_token %}
+  <input type="submit" value="up" />
+</form>
+
+<form method="POST" action="{% url 'posts:downvote' post.id %}">
+  {% csrf_token %}
+  <input type="submit" value="down" />
+</form>
+
+<h3>{{ post.votes_total }} - votes</h3>
 
 <hr/>
 
